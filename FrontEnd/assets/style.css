@@ -125,6 +125,28 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+/****CSS de mes btn****/
+#portfolio .filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    color: #1D6154;
+}
+#portfolio li {
+    border: 1px solid #1D6154;
+    border-radius: 20px;
+    padding: 8px 10px;
+    transition: all 400ms;
+	cursor: pointer;
+	list-style: none;
+}
+
+#portfolio li .focusBtn{
+	background-color: #1D6154;
+	color: #FFF;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
