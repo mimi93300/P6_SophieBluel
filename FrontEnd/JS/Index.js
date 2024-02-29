@@ -44,7 +44,7 @@ function addWorksToGallery(works) {
  });
 }
 // Fonction pour créer les boutons de filtre et gérer les événements
-async function createFilterButtons() {
+async function createFilterButtons(categories) {
  const filter = document.querySelector(".filters");
  const filterAll = document.createElement("li");
  filterAll.innerHTML = "Tous";
@@ -59,12 +59,13 @@ async function createFilterButtons() {
  });
 }
 // Fonction principale
-async function main() {
- allWorks = await fetchData();
+ async function main() {
+  const categories = await fetchCategories();
+  allWorks = await fetchData();
 
  addWorksToGallery(allWorks);
  
- createFilterButtons();
+ createFilterButtons(categories);
 }
 // Appel de la fonction principale
 main();
