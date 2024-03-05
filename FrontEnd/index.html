@@ -11,18 +11,59 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+	<div class="shadow"></div>
+
+	<div class="blackspace">
+		<div><i class="fa-regular fa-pen-to-square"></i></div>
+		<p>Mode édition</p>
+	</div>
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="#portfolio">projets</a></li>
+			<li><a href="#contact">contact</a></li>
+			<li><a href="login.html">login</a></li>
+			<li><a href="login.html">logout</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <main>
+
+	<!-- Modale de modification des Works page 1 -->
+
+	<aside class="modale" role="dialog">
+		<h3>Galerie photo</h3>
+		<i class="fa-solid fa-xmark close"></i>
+		<div class="galleryModal">
+
+		</div>
+		<div class="border-bottom"></div>
+
+		<button id="btnAdd">Ajouter une photo</button>
+	</aside>
+	
+	<!-- Modale de modification des Works page 2 Ajout photos -->
+
+	<aside class="modifyWork" role="dialog">
+		<h3>Ajout Photo</h3>
+		<i class="fa-solid fa-arrow-left arrowReturn"></i>
+		<i class="fa-solid fa-xmark close"></i>
+
+		<form id="dataForm" enctype="multipart/form-data" action='#' method="post">
+
+			<div class="ajouterPhoto">
+				<i class="fa-regular fa-image fa-5x"></i>
+				<label id="btnAddPicture" for="filePicture">+ Ajouter photo</label>
+				<input type="file" name="image" id="filePicture" multiple accept="images/*" required />
+				
+				<p>jpg, png : 4mo max</p>
+			</div>
+		</form>
+	</aside>
+			
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
@@ -35,7 +76,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="portfolio-modif">
+		<div class="modifier">
+			<h2>Mes Projets</h2>
+			<i class="fa-regular fa-pen-to-square"></i>
+			<p>modifier</p>
+		</div>
+		</div>
 		<div class="filters"></div>
 		<div class="gallery"></div>
 	</section>

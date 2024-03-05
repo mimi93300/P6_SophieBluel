@@ -1,39 +1,31 @@
 const formInfo = document.querySelector("#contact form");
-
-const connect = () => {
-  const formData = new FormData(formInfo);
-
-  const dataUser = Object.fromEntries(formData);
-  console.log(dataUser);
-
-  fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dataUser),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      localStorage.setItem("Token", data.token);
-
-
-      if (data.message || data.error) {
-        alert("Erreur dans l’identifiant ou le mot de passe");
-        document.location.href = "./login.html"
-        form.reset()
-      } else {
-        localStorage.setItem("Token", data.token);
-        // sessionStorage.setItem("isConnected", JSON.stringify(true));
-        document.location.href = "./index.html";
-      }
-    });
-};
-
-
-// console.log(formInfo);
 formInfo.addEventListener("submit", (e) => {
-  e.preventDefault();
-  connect();
-
-  
+ e.preventDefault();
+ connect();
 });
-
+const connect = () => {
+ const formData = new FormData(formInfo);
+ const dataUser = Object.fromEntries(formData);
+ fetch("http://localhost:5678/api/users/login", {
+   method: "POST",
+   headers: { "Content-Type": "application/json" },
+   body: JSON.stringify(dataUser),
+ })
+   .then((response) => {
+     if (response.ok) {
+       return response.json();
+     } else {
+       return response.json().then((data) => {
+         throw new Error(data.message || "Erreur dans l’identifiant ou le mot de passe");
+       });
+     }
+   })
+   .then((data) => {
+     sessionStorage.setItem("Token", data.token);
+     document.location.href = "./index.html"; // Redirection vers la page d'accueil
+   })
+   .catch((error) => {
+     alert(error.message);
+     formInfo.reset();
+   });
+};
