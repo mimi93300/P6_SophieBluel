@@ -7,62 +7,24 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-	<div class="shadow"></div>
-
-	<div class="blackspace">
-		<div><i class="fa-regular fa-pen-to-square"></i></div>
-		<p>Mode édition</p>
-	</div>
-
+	
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="#portfolio">projets</a></li>
 			<li><a href="#contact">contact</a></li>
-			<li><a href="login.html">login</a></li>
-			<li><a href="login.html">logout</a></li>
+			<li class="loginPage"><a href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <main>
-
-	<!-- Modale de modification des Works page 1 -->
-
-	<aside class="modale" role="dialog">
-		<h3>Galerie photo</h3>
-		<i class="fa-solid fa-xmark close"></i>
-		<div class="galleryModal">
-
-		</div>
-		<div class="border-bottom"></div>
-
-		<button id="btnAdd">Ajouter une photo</button>
-	</aside>
-	
-	<!-- Modale de modification des Works page 2 Ajout photos -->
-
-	<aside class="modifyWork" role="dialog">
-		<h3>Ajout Photo</h3>
-		<i class="fa-solid fa-arrow-left arrowReturn"></i>
-		<i class="fa-solid fa-xmark close"></i>
-
-		<form id="dataForm" enctype="multipart/form-data" action='#' method="post">
-
-			<div class="ajouterPhoto">
-				<i class="fa-regular fa-image fa-5x"></i>
-				<label id="btnAddPicture" for="filePicture">+ Ajouter photo</label>
-				<input type="file" name="image" id="filePicture" multiple accept="images/*" required />
-				
-				<p>jpg, png : 4mo max</p>
-			</div>
-		</form>
-	</aside>
 			
 	<section id="introduction">
 		<figure>
@@ -76,13 +38,8 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<div class="portfolio-modif">
-		<div class="modifier">
 			<h2>Mes Projets</h2>
-			<i class="fa-regular fa-pen-to-square"></i>
-			<p>modifier</p>
-		</div>
-		</div>
+		
 		<div class="filters"></div>
 		<div class="gallery"></div>
 	</section>
@@ -111,3 +68,44 @@
 <script src="./JS/Index.js"></script>
 </body>
 </html>
+
+<!-- 
+<div class="shadow"></div>
+
+	<div class="blackspace">
+		<div><i class="fas fa-pen-square"></i></div>
+		<p>Mode édition</p>
+	</div>
+
+
+ Modale de modification des Works page 1
+
+	<aside class="modale" role="dialog">
+		<h3>Galerie photo</h3>
+		<i class="fa-solid fa-xmark close"></i>
+		<div class="galleryModal">
+
+		</div>
+		<div class="border-bottom"></div>
+
+		<button id="btnAdd">Ajouter une photo</button>
+	</aside>
+	
+	Modale de modification des Works page 2 Ajout photos -->
+
+	<!-- <aside class="modifyWork" role="dialog">
+		<h3>Ajout Photo</h3>
+		<i class="fa-solid fa-arrow-left arrowReturn"></i>
+		<i class="fa-solid fa-xmark close"></i>
+
+		<form id="dataForm" enctype="multipart/form-data" action='#' method="post">
+
+			<div class="ajouterPhoto">
+				<i class="fa-regular fa-image fa-5x"></i>
+				<label id="btnAddPicture" for="filePicture">+ Ajouter photo</label>
+				<input type="file" name="image" id="filePicture" multiple accept="images/*" required />
+				
+				<p>jpg, png : 4mo max</p>
+			</div>
+		</form>
+	</aside>   -->

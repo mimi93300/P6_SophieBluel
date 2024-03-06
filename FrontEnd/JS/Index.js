@@ -5,15 +5,27 @@ let categories = [];
 const filter = document.querySelector(".filters");
 const gallery = document.querySelector(".gallery");
 
-console.log(categories);
+
+/*console.log(categories);*/
 
 // Fonction principale
 async function main() {
   
-  displayFilter(categories);
+    displayFilter(categories);
 
  
-  displayWorks();
+    displayWorks();
+   // Vérifier si l'utilisateur est connecté en tant qu'administrateur
+   const dataToken = sessionStorage.getItem("Token");
+   if (dataToken) {
+     // Si l'utilisateur est connecté en tant qu'administrateur, modifier la page d'accueil
+     modifyHomePageForAdmin();
+
+     
+
+   }
+
+  
  
 }
 // Appel de la fonction principale
@@ -92,6 +104,82 @@ buttons.forEach((button)=> {
 
 }
 
+function displayModal() {
+  //afficher la modal au millieu
+
+const containerModal = document.createElement("div");
+containerModal.classList.add("containerModal");
+
+
+  const aside = document.createElement("aside");
+  aside.classList.add("modale");
+  const modalTitle = document.createElement("h3");
+  modalTitle.innerHTML = "Galerie photo";
+  const closeIcon = document.createElement("i");
+  closeIcon.classList.add("fa-solid", "fa-xmark", "close");
+  const gallery = document.createElement("div");
+  gallery.classList.add("galleryModal");
+  const borderLine = document.createElement("tr");
+  const btnAdd = document.createElement ("div");
+  btnAdd.innerHTML = "Ajouter une photo";
+  btnAdd.id = "btnAdd";
+  
+  aside.append(modalTitle, closeIcon, gallery, borderLine, btnAdd);
+  containerModal.appendChild(aside);
+  document.body.appendChild(containerModal);
+ }
+
+
+
+function modifyHomePageForAdmin() {
+  const login = document.querySelector(".loginPage");
+  login.innerHTML = "logout"
+  const body = document.querySelector("body");
+
+  const blackspaceDiv = document.createElement("div");
+  blackspaceDiv.classList.add("blackspace")
+  const icon = document.createElement("i");
+  icon.classList.add("fas", "fa-pen-square");
+  const modEdition = document.createElement("p");
+  modEdition.innerHTML = "Mode édition"
+  body.prepend(blackspaceDiv);
+  blackspaceDiv.append(icon, modEdition);
+  
+  const modifier = document.createElement("div");
+
+  modifier.classList.add("modifier");
+  const icon2 = document.createElement("i");
+  icon2.classList.add("fas", "fa-pen-square");
+  const btnModifier = document.createElement("p");
+  btnModifier.innerHTML = "modifier";
+  modifier.append(icon2, btnModifier);
+
+  const portfolio = document.querySelector("#portfolio");
+  const portfolioH2 = portfolio.querySelector("h2");
+
+  portfolioH2.insertAdjacentElement("afterend", modifier);
+ // Ajout d'un écouteur d'événement pour le click sur l'icône
+    
+    modifier.addEventListener("click", () => {
+    displayModal();
+ });
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 //MODALE//
 
 const dataToken = sessionStorage.getItem("Token");
@@ -99,32 +187,66 @@ const dataToken = sessionStorage.getItem("Token");
 const shadow = document.querySelector(".shadow")
 // console.log(shadow);
 
+const iconElement = document.querySelector(".fa-regular.fa-pen-to-square");
+
+const galleryModal = document.getElementById("galleryModal");
+
   // modification de la page d'accueil après connexion //
 if (dataToken) {
   // console.log(login);
   logout.style.display = "inherit";
-  logout.style.display = "inherit"
   login.style.display = "none";
   blackspace.style.visibility = "visible";
-  modifier i p.style.visibility = "visible";
-  filters.style.display = "none";
-}
-
-//Affichage de la modale au click//
-
-const modif = document.querySelector(".modifier i");
-
-  modif.addEventListener("click" function() {
-
-  })
+  iconElement.style.visibility = "visible";
+  document.getElementById("modify-p").style.visibility = "visible";
+  filterAll.style.display = "none";
+   // Redirection vers la page d'accueil
+ window.location.href = "FrontEnd/index.html"; 
+}};
 
 
+//-------déconnexion---------//
+
+const deconnect = (e) => {
+  e.preventDefault()
+  sessionStorage.clear();
+  document.location.href = "./index.html";
+  logout.style.display = "none";
+  login.style.display = "inherit";
+  blackspace.style.visibility = "hidden";
+  iconElement.style.visibility = "hidden";
+  filterAll.style.display = "block";
+};
+logout.addEventListener("click", deconnect);
 
 
+//Affichage de la modale au click// 
+ //--fonction pour générer la galerie dans la modale--//
 
 
-
-
-
+ iconElement.addEventListener("click", async function() {
+  const modalElement = document.getElementById("modale");
+  modalElement.style.display = "block";
+  shadow.style.display = "block";
+  galleryModal.innerHTML = "";
+  const response = await fetch('http://localhost:5678/api/works');
+  const works = await response.json();
+  
+  works.forEach(work => {
+    const workElement = document.createElement("div");
+    workElement.classList.add("work");
+    
+    const workImage = document.createElement("img");
+    workImage.src = work.image;
+    workImage.alt = work.title;
+    workImage.classList.add("work-thumbnail");
+    workElement.appendChild(workImage);
+    const workTitle = document.createElement("h3");
+    workTitle.textContent = work.title;
+    workElement.appendChild(workTitle);
+    
+    galleryModal.appendChild(workElement);
+  });
+ });*/
 
 

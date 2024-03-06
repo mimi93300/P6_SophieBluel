@@ -191,28 +191,10 @@ nav li {
 nav ul li a {
 	text-decoration: none;
 	color: #000000;
-	position: absolute;
-	right: 17%;
+
    }
 
-nav ul li:nth-child(1){
-	position: relative;
-    right: 130px;
-}
 
-nav ul li:nth-child(2){
-	position: relative;
-    right: 60px;
-}
-
-nav ul li:nth-child(3) {
-	position: relative;
-    right: 10px;
-   }
-
-   nav ul li:nth-child(4){
-	display: none;
-   }
 
 li:hover {
 	color: #B1663C;
@@ -355,20 +337,22 @@ footer nav ul {
 	justify-content: center;
 	align-items: center;
 	gap: 7px;
-	visibility: hidden;
 }
 
-#portfolio .portfolio-modif {
-    display: flex;
-    justify-content: center;
-    align-items: last baseline;
-    gap: 15px;
-    color: #000000;
+
+
+#portfolio{
+	position: relative;
+
+
 }
 
 .modifier {
 	display: flex;
 	gap: 7px;
+	position: absolute;
+	right: 370px;
+	top: 15px;
 }
 
 .modifier i{
@@ -376,30 +360,29 @@ footer nav ul {
     font-weight: 400;
     width: 15px;
     color: black;
-	visibility: hidden;
 }
 
-.modifier p{
-	position: relative;
-	top: 14px;
-	visibility: hidden;
-}
 
 /**Modale**/
 
+.shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #333333b7;
+    display: none;
+}
+
 .modale {
-    top: 50%;
-    left: 50%;
-    position: absolute;
     border-radius: 10px;
     width: 630px;
     transform: translate(-50%, -50%);
     height: 688px;
     border: 1px solid rgb(194, 194, 153);
     text-align: center;
-    display: none;
     background-color: #FFF;
-    position: fixed;
 }
 
 .modale h3, .modifyWork h3 {
@@ -416,12 +399,28 @@ footer nav ul {
     gap: 15px;
 }
 
-.border-bottom {
-    border: 1px solid #b3b3b3;
-    width: 400px;
+.modale tr{
+	width: 50px;
+ 	border: #000000 2px solid;
+}
+
+.containerModal{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 5;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.close {
     position: absolute;
-    top: 560px;
-    left: 110px;
+    top: 0;
+    right: 0;
+    transform: translate(-50%, 50%);
+    
 }
 
 .modifyWork {
@@ -449,6 +448,7 @@ footer nav ul {
 }
 
 .modale button, .modifyWork button {
+	display: inline;
     background-color: #1D6154;
     color: #FFF;
     border-radius: 20px;
@@ -459,5 +459,9 @@ footer nav ul {
     font-family: Syne;
     border: transparent;
     cursor: pointer;
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
