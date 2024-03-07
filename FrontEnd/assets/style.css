@@ -203,6 +203,7 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	padding-bottom: 70px;
 }
 
 #introduction figure {
@@ -212,7 +213,10 @@ li:hover {
 #introduction img {
 	display: block;
 	margin: auto;
-	width: 80%;
+	width: 474px;
+    height: 355px;
+	top: 40px;
+    right: 50px;
 }
 
 #introduction article {
@@ -348,6 +352,7 @@ footer nav ul {
 }
 
 .modifier {
+	cursor: pointer;
 	display: flex;
 	gap: 7px;
 	position: absolute;
@@ -356,7 +361,6 @@ footer nav ul {
 }
 
 .modifier i{
-	cursor: pointer;
     font-weight: 400;
     width: 15px;
     color: black;
@@ -376,8 +380,11 @@ footer nav ul {
 }
 
 .modale {
-    border-radius: 10px;
-    width: 630px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	border-radius: 10px;
+	width: 630px;
     transform: translate(-50%, -50%);
     height: 688px;
     border: 1px solid rgb(194, 194, 153);
@@ -405,6 +412,8 @@ footer nav ul {
 }
 
 .containerModal{
+	top: 0;
+	left: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -415,10 +424,26 @@ footer nav ul {
 	background: rgba(0, 0, 0, 0.3);
 }
 
+#btnAdd {
+    background-color: #1D6154;
+    color: #FFF;
+    border-radius: 20px;
+    width: 237px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: Syne;
+    border: transparent;
+    cursor: pointer;
+	padding: 10px 20px;
+	position: relative;
+	left: 28%;
+    top: 50%;
+}
+
 .close {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10px;
     transform: translate(-50%, 50%);
     
 }
