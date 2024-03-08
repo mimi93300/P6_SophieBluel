@@ -147,14 +147,19 @@ function modifyHomePageForAdmin() {
  });
  }
 
-async function displayModalWorks() {
+ async function displayModalWorks() {
   const gallery = document.querySelector(".galleryModal");
   gallery.innerHTML = "";
   works = await fetchWorks();
-  works.forEach((work)=>{
+  works.forEach((work) => {
+    const figure = document.createElement("figure");
     const img = document.createElement("img");
     img.src = work.imageUrl;
-    gallery.appendChild(img);
+    const trashIcon = document.createElement("i");
+    trashIcon.className = "fa-light fa-trash-can";
+    figure.appendChild(img);
+    figure.appendChild(trashIcon);
+    gallery.appendChild(figure);
   });
 }
 
@@ -177,7 +182,7 @@ function displayModal() {
   aside.append(modalTitle, closeIcon, gallery, borderLine, btnAdd);
   containerModal.appendChild(aside);
   document.body.appendChild(containerModal);
-
+  
   
   //Appeler la fonction pour afficher les travaux//
   displayModalWorks();

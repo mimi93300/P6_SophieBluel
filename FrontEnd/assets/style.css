@@ -489,6 +489,21 @@ footer nav ul {
     right: 45%;
 }
 
+.galleryModal figure{
+	position: relative;
+}
+
+.galleryModal i{
+	position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #000000;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
 .galleryModal img {
     width: 76px;
     height: 102px;
