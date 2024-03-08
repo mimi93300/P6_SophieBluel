@@ -5,6 +5,8 @@ let categories = [];
 const filter = document.querySelector(".filters");
 const gallery = document.querySelector(".gallery");
 
+const galleryM = document.createElement("div");
+
 
 /*console.log(categories);*/
 
@@ -104,36 +106,15 @@ buttons.forEach((button)=> {
 
 }
 
-function displayModal() {
-  //afficher la modal au millieu
-
-const containerModal = document.createElement("div");
-containerModal.classList.add("containerModal");
-
-
-  const aside = document.createElement("aside");
-  aside.classList.add("modale");
-  const modalTitle = document.createElement("h3");
-  modalTitle.innerHTML = "Galerie photo";
-  const closeIcon = document.createElement("i");
-  closeIcon.classList.add("fa-solid", "fa-xmark", "close");
-  const gallery = document.createElement("div");
-  gallery.classList.add("galleryModal");
-  const borderLine = document.createElement("tr");
-  const btnAdd = document.createElement ("div");
-  btnAdd.innerHTML = "Ajouter une photo";
-  btnAdd.id = "btnAdd";
-  
-  aside.append(modalTitle, closeIcon, gallery, borderLine, btnAdd);
-  containerModal.appendChild(aside);
-  document.body.appendChild(containerModal);
- }
-
-
-
 function modifyHomePageForAdmin() {
+  //Gestion logout
   const login = document.querySelector(".loginPage");
-  login.innerHTML = "logout"
+  login.innerHTML = "logout";
+  login.addEventListener("click", (e) => {
+    e.preventDefault();
+    sessionStorage.removeItem("Token");
+    window.location.href = ("index.html")
+  });
   const body = document.querySelector("body");
 
   const blackspaceDiv = document.createElement("div");
@@ -166,11 +147,91 @@ function modifyHomePageForAdmin() {
  }
 
 
+function displayModal() {
+  // Afficher la modal au milieu
+  const containerModal = document.createElement("div");
+  containerModal.classList.add("containerModal");
+  const aside = document.createElement("aside");
+  aside.classList.add("modale");
+  const modalTitle = document.createElement("h3");
+  modalTitle.innerHTML = "Galerie photo";
+  const closeIcon = document.createElement("i");
+  closeIcon.classList.add("fa-solid", "fa-xmark", "close");
+  const gallery = document.createElement("div");
+  gallery.classList.add("galleryModal");
+  const borderLine = document.createElement("hr");
+  const btnAdd = document.createElement("div");
+  btnAdd.innerHTML = "Ajouter une photo";
+  btnAdd.id = "btnAdd";
+  aside.append(modalTitle, closeIcon, gallery, borderLine, btnAdd);
+  containerModal.appendChild(aside);
+  document.body.appendChild(containerModal);
+  // Appeler la fonction pour afficher les travaux
+  displayWorks().then(works => {
+    works.forEach(work => {
+      //Afficher chaque image sans titre
+      const img = document.createElement("img");
+      img.src = work.imageUrl;
+      gallery.appendChild(img);
+    });
+  });
+ }
+
+
+
+/*
+function displayModal() {
+  //afficher la modal au millieu
+
+const containerModal = document.createElement("div");
+containerModal.classList.add("containerModal");
+
+
+  const aside = document.createElement("aside");
+  aside.classList.add("modale");
+  const modalTitle = document.createElement("h3");
+  modalTitle.innerHTML = "Galerie photo";
+  const closeIcon = document.createElement("i");
+  closeIcon.classList.add("fa-solid", "fa-xmark", "close");
+  const gallery = document.createElement("div");
+  gallery.classList.add("galleryModal");
+  const borderLine = document.createElement("hr");
+  const btnAdd = document.createElement ("div");
+  btnAdd.innerHTML = "Ajouter une photo";
+  btnAdd.id = "btnAdd";
+  
+  aside.append(modalTitle, closeIcon, gallery, borderLine, btnAdd);
+  containerModal.appendChild(aside);
+  document.body.appendChild(containerModal);
+ }
+*/
 
 
 
 
 
+
+
+
+
+
+/*
+async function deleteWork(workId) {
+  try {
+    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+      method: 'DELETE',
+    });
+    if (response.ok) {
+      // Work supprimé avec succès
+      console.log(`Le work avec l'ID ${workId} a été supprimé.`);
+    } else {
+      // Gérer les erreurs en cas de problème de suppression
+      console.error('Erreur lors de la suppression du work.');
+    }
+  } catch (error) {
+    console.error('Une erreur s\'est produite lors de la suppression du work : ', error);
+  }
+ }
 
 
 
@@ -248,5 +309,3 @@ logout.addEventListener("click", deconnect);
     galleryModal.appendChild(workElement);
   });
  });*/
-
-

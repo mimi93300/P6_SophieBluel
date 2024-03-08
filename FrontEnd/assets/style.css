@@ -173,6 +173,7 @@ h2 {
 	font-weight: 700;
 	font-size: 30px;
 	color: #1D6154
+	padding-bottom: 25px;
 }
 
 nav ul {
@@ -203,7 +204,8 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
-	padding-bottom: 70px;
+	padding-bottom: 5%;
+	padding-top: 3%;
 }
 
 #introduction figure {
@@ -211,12 +213,12 @@ li:hover {
 }
 
 #introduction img {
-	display: block;
-	margin: auto;
-	width: 474px;
+	position: relative;
+    display: block;
+    width: 474px;
     height: 355px;
-	top: 40px;
-    right: 50px;
+    top: 17%;
+    right: 0%;
 }
 
 #introduction article {
@@ -386,10 +388,9 @@ footer nav ul {
 	border-radius: 10px;
 	width: 630px;
     transform: translate(-50%, -50%);
-    height: 688px;
-    border: 1px solid rgb(194, 194, 153);
     text-align: center;
     background-color: #FFF;
+	padding-bottom: 40px;
 }
 
 .modale h3, .modifyWork h3 {
@@ -406,9 +407,9 @@ footer nav ul {
     gap: 15px;
 }
 
-.modale tr{
-	width: 50px;
- 	border: #000000 2px solid;
+.modale hr{
+	width: 70%;
+ 	
 }
 
 .containerModal{
@@ -438,12 +439,13 @@ footer nav ul {
 	position: relative;
 	left: 28%;
     top: 50%;
+	margin-top: 20px;
 }
 
 .close {
     position: absolute;
-    top: 0;
-    right: 10px;
+    top: 10px;
+    right: 20px;
     transform: translate(-50%, 50%);
     
 }

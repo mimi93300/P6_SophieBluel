@@ -15,17 +15,18 @@ const connect = () => {
      if (response.ok) {
        return response.json();
      } else {
-       return response.json().then((data) => {
-         throw new Error(data.message || "Erreur dans l’identifiant ou le mot de passe");
-       });
-     }
+       
+         throw new Error("Erreur dans l’identifiant ou le mot de passe");
+
+     }  
    })
    .then((data) => {
      sessionStorage.setItem("Token", data.token);
      document.location.href = "./index.html"; // Redirection vers la page d'accueil
    })
    .catch((error) => {
-     alert(error.message);
+    console.log(error.message);
+     alert("Erreur dans l’identifiant ou le mot de passe");
      formInfo.reset();
    });
 };
