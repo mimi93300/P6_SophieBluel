@@ -401,9 +401,9 @@ footer nav ul {
 }
 
 .galleryModal {
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    padding: 100px;
+    display: grid;
+	padding: 70px 100px;
     gap: 15px;
 }
 
@@ -442,12 +442,56 @@ footer nav ul {
 	margin-top: 20px;
 }
 
+#btnSubmit{
+	background-color: #1D6154;
+    color: #FFF;
+    border-radius: 20px;
+    width: 237px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: Syne;
+    border: transparent;
+    cursor: pointer;
+	padding: 10px 20px;
+	position: relative;
+	left: 28%;
+    top: 70%;
+	margin-top: 20px;
+}
+
+.modifyWork hr{
+	width: 70%;
+	top: 70%;
+    position: relative;
+ 	
+}
+
+#form{
+	margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
 .close {
     position: absolute;
     top: 10px;
     right: 20px;
     transform: translate(-50%, 50%);
     
+}
+
+.arrowReturn {
+	position: relative;
+    bottom: 8%;
+    right: 45%;
+}
+
+.galleryModal img {
+    width: 76px;
+    height: 102px;
 }
 
 .modifyWork {
@@ -460,7 +504,6 @@ footer nav ul {
     height: 688px;
     border: 1px solid rgb(194, 194, 153);
     text-align: center;
-    display: none;
     background-color: #FFF;
     position: fixed;
 }
