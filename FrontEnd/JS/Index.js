@@ -8,6 +8,9 @@ const gallery = document.querySelector(".gallery");
 const galleryM = document.createElement("div");
 
 
+const closeIcon = document.querySelector(".close");
+const containerModal = document.querySelector(".containerModal");
+
 /*console.log(categories);*/
 
 // Fonction principale
@@ -55,28 +58,47 @@ async function fetchCategories() {
   }
 }
 
+async function deleteWork(workId) {
+  try {
+    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+      method: 'DELETE'
+    });
+    if (response.ok) {
+      console.log(`Le travail avec l'ID ${workId} a été supprimé avec succès.`);
+      return await response.json(); // Convertit la réponse en JSON
+    } else {
+      console.error('Erreur lors de la suppression du travail:', response.statusText);
+      return null; // Retourne null en cas d'erreur
+    }
+  } catch (error) {
+    console.error('Erreur lors de la suppression du travail:', error);
+    return null; // Retourne null en cas d'erreur
+  }
+}
 
 
-// Fonction pour afficher les travaux dans la galerie
+
+//Fonction qui permet d'afficher les works dans la galerie
 async function displayWorks(categorieId) {
   works = await fetchWorks();
   gallery.innerHTML = ""; // Vider la galerie actuelle
   works.forEach((work) => {
-  if (categorieId == work.category.id || categorieId == null) {
-    const workContainer = document.createElement("figure");
-    workContainer.classList.add("work-container");
-    const workImage = document.createElement("img");
-    workImage.setAttribute("src", work.imageUrl);
-    workImage.setAttribute("alt", work.title);
-    const workTitle = document.createElement("figcaption");
-    workTitle.textContent = work.title;
-    workContainer.appendChild(workImage);
-    workContainer.appendChild(workTitle);
-    gallery.appendChild(workContainer);
-  }  
+    if (categorieId == work.category.id || categorieId == null) {
+      const workContainer = document.createElement("figure");
+      workContainer.classList.add("work-container");
+      workContainer.setAttribute("data-id", work.id); // Ajout de l'attribut data-id
+      const workImage = document.createElement("img");
+      workImage.setAttribute("src", work.imageUrl);
+      workImage.setAttribute("alt", work.title);
+      const workTitle = document.createElement("figcaption");
+      workTitle.textContent = work.title;
+      workContainer.appendChild(workImage);
+      workContainer.appendChild(workTitle);
+      gallery.appendChild(workContainer);
+    }  
   });
-  
 }
+
 
 // Fonction pour créer les boutons de filtre et gérer les événements
 async function displayFilter() {
@@ -157,11 +179,33 @@ function modifyHomePageForAdmin() {
     img.src = work.imageUrl;
     const trashIcon = document.createElement("i");
     trashIcon.className = "fa-light fa-trash-can";
+    
+    trashIcon.addEventListener("click", () => {
+      // Appeler la fonction deleteWork lorsque l'icône de suppression est cliquée
+      deleteWork(figure, img);
+    });
+
     figure.appendChild(img);
     figure.appendChild(trashIcon);
     gallery.appendChild(figure);
   });
 }
+
+function deleteWork(figure, img) {
+  // Supprimer l'élément de la modale
+  figure.remove();
+  img.remove();
+
+  // Sélectionner l'élément correspondant dans la galerie principale
+  const correspondingElement = document.querySelector(`[data-id="${figure.dataset.id}"]`);
+
+  // Vérifier si l'élément correspondant existe dans la galerie principale
+  if (correspondingElement) {
+    // Supprimer l'élément correspondant de la galerie principale
+    correspondingElement.remove();
+  }
+}
+
 
 function displayModal() {
   // Afficher la modal au milieu
@@ -183,17 +227,18 @@ function displayModal() {
   containerModal.appendChild(aside);
   document.body.appendChild(containerModal);
   
-  
-  //Appeler la fonction pour afficher les travaux//
+  //Appeler la fonction pour afficher les travaux
   displayModalWorks();
 
+
   btnAdd.addEventListener("click", function() {
-    // Appel de la fonction pour afficher la deuxième modal
     displayModal2();
-    // Masquer la modal actuelle
-    aside.style.display = "none"; // pour masquer la modal displayModal
+   
  });
- }
+}
+
+
+
 
 
  function displayModal2() {
@@ -261,35 +306,21 @@ formElement.appendChild(paragraphElement);
 }
 
 
-/*
-function displayModal() {
-  //afficher la modal au millieu
-
-const containerModal = document.createElement("div");
-containerModal.classList.add("containerModal");
 
 
-  const aside = document.createElement("aside");
-  aside.classList.add("modale");
-  const modalTitle = document.createElement("h3");
-  modalTitle.innerHTML = "Galerie photo";
-  const closeIcon = document.createElement("i");
-  closeIcon.classList.add("fa-solid", "fa-xmark", "close");
-  const gallery = document.createElement("div");
-  gallery.classList.add("galleryModal");
-  const borderLine = document.createElement("hr");
-  const btnAdd = document.createElement ("div");
-  btnAdd.innerHTML = "Ajouter une photo";
-  btnAdd.id = "btnAdd";
+
+
+// Gestionnaire d'événements pour la fermeture de la modale
+closeIcon.addEventListener("click", () => {
   
-  aside.append(modalTitle, closeIcon, gallery, borderLine, btnAdd);
-  containerModal.appendChild(aside);
-  document.body.appendChild(containerModal);
- }
-*/
+  modifyHomePageForAdmin(); // Appeler la fonction pour modifier la page pour l'administrateur
+});
 
-
-
+// Gestionnaire d'événements pour le clic sur le fond sombre pour fermer la modale
+containerModal.addEventListener("click", () => {
+  
+  modifyHomePageForAdmin(); // Appeler la fonction pour modifier la page pour l'administrateur
+});
 
 
 
