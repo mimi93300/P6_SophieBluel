@@ -172,7 +172,7 @@ h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 	padding-bottom: 25px;
 }
 
@@ -454,30 +454,33 @@ footer nav ul {
     cursor: pointer;
 	padding: 10px 20px;
 	position: relative;
-	left: 28%;
-    top: 70%;
+	left: 12%;
 	margin-top: 20px;
 }
 
 .modifyWork hr{
 	width: 70%;
-	top: 70%;
     position: relative;
  	
 }
 
-#form{
-	margin-top: 20px;
+
+#uploadImage {
+	width: 420px;
+    height: 169px;
+    background-color: #E8F1F6;
+    margin: 100px 105px 0 105px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 5px;
+    border-radius: 3px;
 }
 
 .close {
     position: absolute;
-    top: 10px;
+    top: 18px;
     right: 20px;
     transform: translate(-50%, 50%);
     cursor: pointer;
@@ -485,8 +488,9 @@ footer nav ul {
 
 .arrowReturn {
 	position: relative;
-    bottom: 8%;
+    bottom: 83%;
     right: 45%;
+	cursor: pointer;
 }
 
 .galleryModal figure{
@@ -521,16 +525,76 @@ footer nav ul {
     text-align: center;
     background-color: #FFF;
     position: fixed;
+	z-index: 10;
 }
 
 .modifyWork form {
-    margin-top: 20px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 20px;
 }
+
+.modifyWork form label{
+	display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+#title{
+	width: 420px;
+    height: 51px;
+    border: none;
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.09);
+}
+
+#select{
+	width: 420px;
+  height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  margin-bottom: 15px;
+}
+
+#previewImage {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 420px;
+	height: 169px;
+	border-radius: 3px;
+	background: #e8f1f6;
+	padding-bottom: 10px;
+  }
+
+  .modifyWork form p {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50px;
+	width: 173px;
+	height: 36px;
+	color: #306685;
+	background: #cbd6dc;
+  }
+
+  .modifyWork form i {
+	font-size: 76px;
+	color: #cbd6dc;
+  }
+
+  .modifyWork form span {
+	padding-top: 20px;
+	color: #444444;
+  }
+
+  .modifyWork div{
+    margin: 100px 105px 0 105px;
+    border-radius: 3px;
+  }
 
 .modale button, .modifyWork button {
 	display: inline;

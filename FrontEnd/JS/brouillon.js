@@ -1,4 +1,4 @@
-function displayModal2() {
+/*function displayModal2() {
     // Afficher la modal au milieu
     const containerModal = document.createElement("div");
     containerModal.classList.add("containerModal");
@@ -99,3 +99,18 @@ formElement.appendChild(paragraphElement);
 
 
 </aside>
+
+/******
+//-------déconnexion---------//
+
+const deconnect = (e) => {
+  e.preventDefault()
+  sessionStorage.clear();
+  document.location.href = "./index.html";
+  logout.style.display = "none";
+  login.style.display = "inherit";
+  blackspace.style.visibility = "hidden";
+  iconElement.style.visibility = "hidden";
+  filterAll.style.display = "block";
+};
+logout.addEventListener("click", deconnect);
