@@ -165,6 +165,7 @@ buttons.forEach((button)=> {
 
 }
 
+//Mode administrateur de la page
 function modifyHomePageForAdmin() {
   //Gestion logout
   const login = document.querySelector(".loginPage");
@@ -234,7 +235,7 @@ function modifyHomePageForAdmin() {
 
 
 
-
+//Affiche la 1ere modale
 function displayModal() {
   // Afficher la modal au milieu
   const containerModal = document.createElement("div");
@@ -264,7 +265,7 @@ function displayModal() {
 
 
 
-//function pour prévisualiser l'image
+//function pour prévisualiser l'image dans le formulaire de la modale2
 const previewImage = () => {
   const input = document.querySelector("#uploadImage");
   const preview = document.querySelector("#previewImage img");
@@ -307,6 +308,7 @@ const previewImage = () => {
   btnAdd.classList.toggle("enabled", formValid);
 }
 
+//2e page de modale pour ajout de photo
 function displayModal2() {
   // Afficher la modal au milieu
   const aside = document.createElement("aside");
@@ -335,7 +337,7 @@ function displayModal2() {
 
 
 
-
+ //Événement au click pour fermer les modales
 
 document.addEventListener("click", (event) => {
   const containerModal = document.querySelector(".containerModal");
@@ -349,7 +351,7 @@ document.addEventListener("click", (event) => {
     modifyWork.remove()
   }
 });
-
+ //Événement au click pour retourner à la page précedente
 document.addEventListener("click", (event) => {
   const returnModal1 = document.querySelector(".arrowReturn");
   const modifyWork = document.querySelector(".modifyWork")
@@ -383,7 +385,7 @@ document.addEventListener("click", (event) => {
         // Gérer l'erreur, par exemple afficher un message à l'utilisateur
       }
     } else {
-      window.location.href = "./login.html";
+      window.location.href = "./Index.html";
     }
   }
 });
