@@ -467,11 +467,8 @@ footer nav ul {
 
 
 #uploadImage {
-	width: 420px;
-	height: 169px;
 	background-color: #E8F1F6;
-	margin: 100px 105px 0 105px;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -490,14 +487,12 @@ footer nav ul {
 }
 
 #imgPreview {
-	max-width: 100%;
-	/* Image ne dépassera pas la largeur de son conteneur */
-	max-height: 100px;
-	/* Image ne dépassera pas une hauteur de 300 pixels */
-	display: block;
-	/* Pour s'assurer que l'image est affichée en tant qu'élément de bloc */
+	width: 129px;
+	height: 193px;
+	top: 774px;
+	left: 655px;
+	display: none;
 	margin: auto;
-	/* Pour centrer l'image horizontalement */
 }
 
 .close {
@@ -587,10 +582,9 @@ footer nav ul {
 	align-items: center;
 	justify-content: space-evenly;
 	width: 420px;
-	height: 169px;
+	height: 197px;
 	border-radius: 3px;
 	background: #e8f1f6;
-	padding-bottom: 10px;
 }
 
 .modifyWork form p {

@@ -9,7 +9,9 @@ const galleryM = document.createElement("div");
 
 
 const closeIcon = document.querySelector(".close");
-const containerModal = document.querySelector(".containerModal");
+//const containerModal = document.querySelector(".containerModal");
+
+let containerModal
 
 /*console.log(categories);*/
 
@@ -60,23 +62,32 @@ async function fetchCategories() {
 
 async function deleteWork(workId) {
   try {
+    const adminToken = sessionStorage.getItem("Token")
     const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        accept: "*/*",
+        Authorization: `Bearer ${adminToken}`,
+     },
     });
     if (response.ok) {
       console.log(`Le travail avec l'ID ${workId} a été supprimé avec succès.`);
-      return await response.json(); // Convertit la réponse en JSON
+      //return await response.json(); // Convertit la réponse en JSON
+      await displayModalWorks();
+      await displayWorks(); // Mettre à jour la galerie principale
+
     } else {
       console.error('Erreur lors de la suppression du travail:', response.statusText);
-      return null; // Retourne null en cas d'erreur
+      //return null; // Retourne null en cas d'erreur
     }
   } catch (error) {
     console.error('Erreur lors de la suppression du travail:', error);
-    return null; // Retourne null en cas d'erreur
+    //return null; // Retourne null en cas d'erreur
   }
 }
 
-async function postWorks(image, title, category, dataToken) {
+async function postWorks(image, title, category, Token) {
+  const adminToken = sessionStorage.getItem("Token"); // Récupération du token depuis la session
   let errorResponse;
   try {
     const formData = new FormData();
@@ -88,7 +99,7 @@ async function postWorks(image, title, category, dataToken) {
       method: "POST",
       headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${dataToken}`,
+        Authorization: `Bearer ${adminToken}`, // Utilisation du token récupéré depuis la session
       },
       body: formData,
     });
@@ -110,6 +121,7 @@ async function postWorks(image, title, category, dataToken) {
     throw error;
   }
 }
+
 
 
 
@@ -198,7 +210,10 @@ function modifyHomePageForAdmin() {
  const filter = document.querySelector(".filters")
     filter.remove()
     modifier.addEventListener("click", () => {
-    displayModal();
+      // Afficher la modal au milieu
+      containerModal = document.createElement("div");
+      containerModal.classList.add("containerModal");
+      displayModal();
  });
  }
 
@@ -216,8 +231,7 @@ function modifyHomePageForAdmin() {
       try {
         await deleteWork(work.id); // Suppression de l'œuvre lors du clic sur l'icône de la corbeille
         // Mettre à jour l'affichage après la suppression
-        await displayModalWorks();
-        await displayWorks(); // Mettre à jour la galerie principale
+       
       } catch (error) {
         console.error("Erreur lors de la suppression de l'œuvre :", error);
         // Gérer l'erreur, par exemple afficher un message à l'utilisateur
@@ -237,9 +251,7 @@ function modifyHomePageForAdmin() {
 
 //Affiche la 1ere modale
 function displayModal() {
-  // Afficher la modal au milieu
-  const containerModal = document.createElement("div");
-  containerModal.classList.add("containerModal");
+  
   const aside = document.createElement("aside");
   aside.classList.add("modale");
   const modalTitle = document.createElement("h3");
@@ -257,6 +269,8 @@ function displayModal() {
   document.body.appendChild(containerModal);
   //Appeler la fonction pour afficher les travaux
   displayModalWorks();
+
+  closeModal();
   btnAdd.addEventListener("click", function() {
     aside.remove();
     displayModal2();
@@ -290,23 +304,33 @@ const previewImage = () => {
     fileReader.readAsDataURL(file[0]);
   }
 };
-
-// Fonction pour activer/désactiver le bouton en fonction de la validation du formulaire
-  function toggleSubmitButton() {
+//Fonction qui active ou non le bouton SUbmit
+function toggleSubmitButton() {
+  // Récupérer les éléments du formulaire
   const previewImageInput = document.querySelector("#uploadImage");
   const formSelectInput = document.querySelector("#select");
   const formTitleInput = document.querySelector("#title");
-  const btnAdd = document.querySelector("#btnAdd");
+  const btnSubmit = document.querySelector("#btnSubmit");
 
+  // Vérifier si le formulaire est valide
   const formValid =
     previewImageInput.files.length > 0 &&
     formSelectInput.value.trim() !== "" &&
     formTitleInput.value.trim() !== "";
 
-  btnAdd.disabled = !formValid;
+  // Activer ou désactiver le bouton en fonction de la validation du formulaire
+  btnSubmit.disabled = !formValid;
+  btnSubmit.classList.toggle("enabled", formValid);
 
-  btnAdd.classList.toggle("enabled", formValid);
+  // Ajouter un écouteur d'événements click au bouton btnSubmit
+  btnSubmit.addEventListener("click", () => {
+    // Vérifier à nouveau si le formulaire est valide avant d'appeler postWorks()
+    if (formValid) {
+      postWorks(); // Appeler la fonction postWorks() si le formulaire est valide
+    }
+  });
 }
+
 
 //2e page de modale pour ajout de photo
 function displayModal2() {
@@ -331,27 +355,33 @@ function displayModal2() {
   // Ajouter les éléments à la modal
   aside.append(modalTitle2, formContainer, closeIcon, arrowIcon, borderLine, btnValider);
 
-  document.body.appendChild(aside);
+  containerModal.appendChild(aside);
+
+  closeModal();
+
 }
 
 
 
-
- //Événement au click pour fermer les modales
-
-document.addEventListener("click", (event) => {
+function closeModal() {
   const containerModal = document.querySelector(".containerModal");
-  const modifyWork = document.querySelector(".modifyWork")
-  if (
-    (event.target.tagName === "I" &&
-      event.target.classList.contains("fa-xmark")) ||
-    event.target.classList.contains("containerModal")
-  ) {
+  const modifyWork = document.querySelector(".modifyWork");
+
+  document.querySelector(".fa-xmark").addEventListener("click", (event) => {
     containerModal.remove();
-    modifyWork.remove()
-  }
-});
- //Événement au click pour retourner à la page précedente
+  });
+
+  containerModal.addEventListener("click", (event) => {
+    if (event.target === containerModal) {
+      containerModal.remove();
+    }
+  });
+}
+
+
+
+function arrowLeft() {
+  //Événement au click pour retourner à la page précedente
 document.addEventListener("click", (event) => {
   const returnModal1 = document.querySelector(".arrowReturn");
   const modifyWork = document.querySelector(".modifyWork")
@@ -360,38 +390,18 @@ document.addEventListener("click", (event) => {
     event.target.classList.contains("fa-arrow-left")
   ) {
     
+  
     displayModal(); // Appel de la fonction displayModal
     modifyWork.remove();
   }
 });
+}
 
- //Événement au click pour supprimer un projet
- document.addEventListener("click", async (event) => {
-  if (
-    event.target.tagName === "I" &&
-    event.target.classList.contains("fa-trash-can")
-  ) {
-    const workId = event.target.dataset.workId;
-    const dataToken = sessionStorage.getItem("token");
-    if (workId && dataToken && dataToken !== "") {
-      try {
-        await deleteWork(workId, dataToken); 
-        displayModalWorks();
-        gallery.innerHTML = "";
-        displayWorks(currentCategoryId);
 
-      } catch (error) {
-        console.error("Erreur lors de la suppression du projet :", error.message);
-        // Gérer l'erreur, par exemple afficher un message à l'utilisateur
-      }
-    } else {
-      window.location.href = "./Index.html";
-    }
-  }
-});
 
-//Fonction pour créer le formulaire de la modale d'ajout de photo
-  function createFormModal() {
+
+// Fonction pour créer le formulaire de la modale d'ajout de photo
+function createFormModal() {
   const form = document.createElement("form");
 
   const fileLabel = document.createElement("label");
@@ -450,12 +460,34 @@ document.addEventListener("click", (event) => {
 
   form.append(fileLabel, titleLabel, titleInput, selectLabel, selectInput);
 
+  // Ajoutez un gestionnaire d'événements de soumission de formulaire
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Empêche le comportement par défaut du formulaire
+
+    // Récupérez les valeurs du formulaire
+    const image = fileInput.files[0];
+    const title = titleInput.value;
+    const category = selectInput.value;
+
+    // Récupérez le token d'authentification depuis la session
+    const dataToken = sessionStorage.getItem("Token");
+
+    // Appelez la fonction postWorks avec les données du formulaire
+    try {
+      await postWorks(image, title, category, dataToken);
+      // Gérer le succès de l'ajout du projet (par exemple, fermer la modale)
+    } catch (error) {
+      // Gérer les erreurs (par exemple, afficher un message d'erreur à l'utilisateur)
+    }
+  });
+
   fileInput.addEventListener("change", toggleSubmitButton);
   titleInput.addEventListener("input", toggleSubmitButton);
   selectInput.addEventListener("input", toggleSubmitButton);
 
   return form;
 }
+
 
 
 
