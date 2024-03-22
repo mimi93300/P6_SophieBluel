@@ -359,6 +359,10 @@ function displayModal2() {
 
   closeModal();
 
+  arrowLeft();
+
+  toggleSubmitButton();
+
 }
 
 
@@ -381,21 +385,21 @@ function closeModal() {
 
 
 function arrowLeft() {
-  //Événement au click pour retourner à la page précedente
-document.addEventListener("click", (event) => {
   const returnModal1 = document.querySelector(".arrowReturn");
-  const modifyWork = document.querySelector(".modifyWork")
-  if (
-    event.target.tagName === "I" &&
-    event.target.classList.contains("fa-arrow-left")
-  ) {
-    
-  
-    displayModal(); // Appel de la fonction displayModal
+  const modifyWork = document.querySelector(".modale")
+  //Événement au click pour retourner à la page précedente
+
+  document.querySelector(".fa-arrow-left").addEventListener("click", (event) => {
     modifyWork.remove();
-  }
-});
+  });
+
+  modifyWork.addEventListener("click", (event) => {
+    if (event.target === modifyWork) {
+      modifyWork.remove();
+    }
+  });
 }
+
 
 
 
