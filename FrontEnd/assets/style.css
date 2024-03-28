@@ -136,7 +136,6 @@ table {
 
 /** end reset css**/
 body {
-	max-width: 1140px;
 	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
@@ -145,8 +144,11 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+	padding-left: 100px;
+    max-width: 1300px;
 }
+
 
 section {
 	margin: 50px 0
@@ -204,14 +206,11 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
-	padding-bottom: 5%;
-	padding-top: 3%;
-	padding-left: 9%;
+	padding: 3% 10% 5% 10%;
+	gap: 15%;
 }
 
-#introduction figure {
-	flex: 1
-}
+
 
 #introduction img {
 	position: relative;
@@ -219,10 +218,11 @@ li:hover {
 	width: 474px;
 	height: 355px;
 	top: 17%;
+	left: 10%;
 }
 
 #introduction article {
-	flex: 1;
+	max-width: 36%;
 }
 
 #introduction h2 {
@@ -231,7 +231,6 @@ li:hover {
 
 #introduction p {
 	margin-bottom: 0.5em;
-	max-width: 404px;
 }
 
 #portfolio h2 {
@@ -263,7 +262,7 @@ li:hover {
 }
 
 .gallery {
-	width: 98%;
+	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
@@ -272,7 +271,7 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
+	height: 95%;
 }
 
 #contact {
@@ -332,7 +331,6 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
-	background-color: white;
 }
 
 /**Mode Edition**/
@@ -351,8 +349,9 @@ footer nav ul {
 
 #portfolio {
 	position: relative;
-	padding-right: 9%;
-    padding-left: 9%;
+	padding-left: 13%;
+    max-width: 1100px;
+
 }
 
 .modifier {
@@ -360,7 +359,7 @@ footer nav ul {
 	display: flex;
 	gap: 7px;
 	position: absolute;
-	right: 370px;
+	right: 360px;
 	top: 10px;
 }
 
@@ -368,10 +367,6 @@ footer nav ul {
 	font-weight: 400;
 	width: 15px;
 	color: black;
-}
-
-.modifier p {
-	position: relative;
 }
 
 
@@ -404,6 +399,7 @@ footer nav ul {
 	font-size: 26px;
 	font-weight: 400;
 	padding-top: 50px;
+	font-family: "Work Wans";
 }
 
 .galleryModal {
@@ -448,18 +444,36 @@ footer nav ul {
 	margin-top: 20px;
 }
 
-
+#btnSubmit {
+	background-color: #1D6154;
+	color: #FFF;
+	border-radius: 20px;
+	width: 237px;
+	font-weight: 700;
+	font-size: 14px;
+	font-family: Syne;
+	border: transparent;
+	cursor: pointer;
+	padding: 10px 20px;
+	position: relative;
+	left: 50%;
+	bottom: 15px;
+	margin-top: 20px;
+}
 
 .modifyWork hr {
-	width: 70%;
+	width: 100%;
 	position: relative;
 
 }
 
 
 #uploadImage {
+	width: 420px;
+	height: 169px;
 	background-color: #E8F1F6;
-	display: none;
+	margin: 100px 105px 0 105px;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -478,12 +492,12 @@ footer nav ul {
 }
 
 #imgPreview {
-	width: 129px;
-	height: 193px;
-	top: 774px;
-	left: 655px;
-	display: none;
-	margin: auto;
+    max-width: 129px;
+    max-height: 178px;
+    display: block;
+    margin: auto;
+	bottom: 59%;
+    position: relative;
 }
 
 .close {
@@ -542,13 +556,13 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-	gap: 10px;
+	gap: 20px;
 }
 
 .modifyWork form label {
 	display: flex;
 	flex-direction: column;
+	align-items: baseline;
 	margin-bottom: 5px;
 	margin-top: 10px;
 }
@@ -574,9 +588,10 @@ footer nav ul {
 	align-items: center;
 	justify-content: space-evenly;
 	width: 420px;
-	height: 197px;
+	height: 169px;
 	border-radius: 3px;
 	background: #e8f1f6;
+	padding-bottom: 10px;
 }
 
 .modifyWork form p {
@@ -588,43 +603,40 @@ footer nav ul {
 	height: 36px;
 	color: #306685;
 	background: #cbd6dc;
+	bottom: 60px;
+    position: relative;
 }
 
 .modifyWork form i {
 	font-size: 76px;
 	color: #cbd6dc;
+	bottom: 80px;
+    position: relative;
 }
 
 .modifyWork form span {
 	padding-top: 20px;
 	color: #444444;
+	bottom: 73px;
+	position: relative;
+
 }
 
 .modifyWork div {
 	margin: 67px 105px 0 105px;
 	border-radius: 3px;
+	bottom: 60px;
+    position: relative;
 }
 
-
-
-  #btnSubmit {
-	background-color: #A7A7A7;
-	color: #FFF;
-	border-radius: 20px;
-	width: 237px;
-	font-weight: 700;
-	font-size: 14px;
-	font-family: Syne;
-	border: transparent;
-	cursor: not-allowed;
-	padding: 10px 20px;
-	position: relative;
-	left: 12%;
-	margin-top: 20px;
-  }
-  #btnSubmit.enabled {
+.enabled {
 	background-color: green;
 	cursor: pointer;
+  }
+
+.disabled {
+	background-color: grey;
+	cursor: not-allowed;
   }
 
 .modale button,

@@ -1,3 +1,8 @@
+/*import { displayWorks, displayFilter } from './gallery.js';
+import { fetchWorks, fetchCategories, deleteWork, postWorks } from './apiCalls.js';
+import { modifyHomePageForAdmin } from './adminMode.js';
+import { displayModal, displayModal2, closeModal, arrowLeft, createFormModal, previewImage, toggleSubmitButton } from './modals.js';*/
+
 // Variables globales
 let works = [];
 let categories = [];
@@ -13,28 +18,33 @@ const closeIcon = document.querySelector(".close");
 
 let containerModal
 
+
+
 /*console.log(categories);*/
 
 // Fonction principale
 async function main() {
+  displayFilter(categories);
+  displayWorks();
   
-    displayFilter(categories);
+  // Vérifier si l'utilisateur est connecté en tant qu'administrateur
+  const dataToken = sessionStorage.getItem("Token");
+  if (dataToken) {
+    // Si l'utilisateur est connecté en tant qu'administrateur, modifier la page d'accueil
+    modifyHomePageForAdmin();
 
- 
-    displayWorks();
-   // Vérifier si l'utilisateur est connecté en tant qu'administrateur
-   const dataToken = sessionStorage.getItem("Token");
-   if (dataToken) {
-     // Si l'utilisateur est connecté en tant qu'administrateur, modifier la page d'accueil
-     modifyHomePageForAdmin();
-
-     
-
-   }
-
-  
- 
+    // Création et ajout du message de succès
+    const successMessage = document.createElement("div");
+    successMessage.id = "success-message";
+    successMessage.style.display = "none";
+    successMessage.textContent = "La connexion est réussie !";
+    document.body.appendChild(successMessage);
+    successMessage.style.display = "block"; // Affichage du message de succès
+  }
 }
+
+
+
 // Appel de la fonction principale
 main();
 
@@ -62,30 +72,52 @@ async function fetchCategories() {
 
 async function deleteWork(workId) {
   try {
-    const adminToken = sessionStorage.getItem("Token")
-    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
-      method: 'DELETE',
-      headers: {
-        accept: "*/*",
-        Authorization: `Bearer ${adminToken}`,
-     },
-    });
-    if (response.ok) {
-      console.log(`Le travail avec l'ID ${workId} a été supprimé avec succès.`);
-      //return await response.json(); // Convertit la réponse en JSON
-      await displayModalWorks();
-      await displayWorks(); // Mettre à jour la galerie principale
+    // Afficher une boîte de dialogue de confirmation
+    const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce travail ?");
 
+    // Vérifier si l'utilisateur a confirmé la suppression
+    if (confirmation) {
+      const adminToken = sessionStorage.getItem("Token");
+      const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+        method: 'DELETE',
+        headers: {
+          accept: "*/*",
+          Authorization: `Bearer ${adminToken}`,
+        },
+      });
+      if (response.ok) {
+        console.log(`Le travail avec l'ID ${workId} a été supprimé avec succès.`);
+        // Afficher un message de suppression réussie à l'utilisateur
+        displaySuccessMessage("Le travail a été supprimé avec succès.");
+        await displayModalWorks();
+        await displayWorks(); // Mettre à jour la galerie principale
+      } else {
+        console.error('Erreur lors de la suppression du travail:', response.statusText);
+        // Afficher un message d'erreur à l'utilisateur
+        displayErrorMessage("Erreur lors de la suppression du travail.");
+      }
     } else {
-      console.error('Erreur lors de la suppression du travail:', response.statusText);
-      //return null; // Retourne null en cas d'erreur
+      console.log("La suppression du travail a été annulée.");
     }
   } catch (error) {
     console.error('Erreur lors de la suppression du travail:', error);
-    //return null; // Retourne null en cas d'erreur
+    // Afficher un message d'erreur à l'utilisateur
+    displayErrorMessage("Erreur lors de la suppression du travail.");
   }
 }
 
+
+function displaySuccessMessage(message) {
+  // Afficher un message de succès à l'utilisateur sous forme d'alerte
+  alert(message);
+}
+
+function displayErrorMessage(message) {
+  // Afficher un message d'erreur à l'utilisateur sous forme d'alerte
+  alert(message);
+}
+
+//Ajout d'un Works dans la galerie//
 async function postWorks(image, title, category, Token) {
   const adminToken = sessionStorage.getItem("Token"); // Récupération du token depuis la session
   let errorResponse;
@@ -104,7 +136,11 @@ async function postWorks(image, title, category, Token) {
       body: formData,
     });
 
-    if (!response.ok) {
+    if (response.ok) {
+      displayWorks();
+      containerModal.remove();
+      displaySuccessMessage("Le travail a été ajouté avec succès."); // Appel de la fonction displaySuccessMessage ici
+    } else {
       errorResponse = await response.status;
       console.error("Erreur lors de l'ajout de projet :", errorResponse);
       throw new Error(
@@ -121,6 +157,7 @@ async function postWorks(image, title, category, Token) {
     throw error;
   }
 }
+
 
 
 
@@ -177,9 +214,8 @@ buttons.forEach((button)=> {
 
 }
 
-//Mode administrateur de la page
 function modifyHomePageForAdmin() {
-  //Gestion logout
+  // Gestion logout
   const login = document.querySelector(".loginPage");
   login.innerHTML = "logout";
   login.addEventListener("click", (e) => {
@@ -187,15 +223,18 @@ function modifyHomePageForAdmin() {
     sessionStorage.removeItem("Token");
     window.location.href = ("index.html")
   });
+  
+
   const body = document.querySelector("body");
   const blackspaceDiv = document.createElement("div");
-  blackspaceDiv.classList.add("blackspace")
+  blackspaceDiv.classList.add("blackspace");
   const icon = document.createElement("i");
   icon.classList.add("fa-regular", "fa-pen-to-square");
   const modEdition = document.createElement("p");
-  modEdition.innerHTML = "Mode édition"
+  modEdition.innerHTML = "Mode édition";
   body.prepend(blackspaceDiv);
   blackspaceDiv.append(icon, modEdition);
+  
   const modifier = document.createElement("div");
   modifier.classList.add("modifier");
   const icon2 = document.createElement("i");
@@ -203,19 +242,21 @@ function modifyHomePageForAdmin() {
   const btnModifier = document.createElement("p");
   btnModifier.innerHTML = "modifier";
   modifier.append(icon2, btnModifier);
+  
   const portfolio = document.querySelector("#portfolio");
   const portfolioH2 = portfolio.querySelector("h2");
   portfolioH2.insertAdjacentElement("afterend", modifier);
- // Ajout d'un écouteur d'événement pour le click sur l'icône
- const filter = document.querySelector(".filters")
-    filter.remove()
-    modifier.addEventListener("click", () => {
-      // Afficher la modal au milieu
-      containerModal = document.createElement("div");
-      containerModal.classList.add("containerModal");
-      displayModal();
- });
- }
+  
+  // Ajout d'un écouteur d'événement pour le clic sur l'icône
+  modifier.addEventListener("click", () => {
+    // Afficher la modal au milieu
+    containerModal = document.createElement("div");
+    containerModal.classList.add("containerModal");
+    displayModal();
+
+  });
+}
+
 
  async function displayModalWorks() {
   const gallery = document.querySelector(".galleryModal");
@@ -285,23 +326,31 @@ const previewImage = () => {
   const preview = document.querySelector("#previewImage img");
   const file = input.files;
 
-  if (file) {
-    const fileReader = new FileReader();
-    fileReader.onload = (event) => {
-      preview.setAttribute("src", event.target.result);
-    };
-    const iconDisplay = document.querySelector("#iconDisplay");
-    const pDisplay = document.querySelector("#pDisplay");
-    const spanDisplay = document.querySelector("#spanDisplay");
-    const imgDisplay = document.querySelector("#imgPreview");
+  // Vérifiez si des fichiers ont été sélectionnés
+  if (file.length > 0) {
+    // Vérifiez si le fichier est un Blob
+    if (file[0] instanceof Blob) {
+      const fileReader = new FileReader();
+      fileReader.onload = (event) => {
+        preview.setAttribute("src", event.target.result);
+      };
+      const iconDisplay = document.querySelector("#iconDisplay");
+      const pDisplay = document.querySelector("#pDisplay");
+      const spanDisplay = document.querySelector("#spanDisplay");
+      const imgDisplay = document.querySelector("#imgPreview");
 
-    if (iconDisplay || pDisplay || spanDisplay) {
-      iconDisplay.style.display = "none";
-      pDisplay.style.display = "none";
-      spanDisplay.style.display = "none";
-      imgDisplay.style.display = "block";
+      if (iconDisplay || pDisplay || spanDisplay) {
+        iconDisplay.style.display = "none";
+        pDisplay.style.display = "none";
+        spanDisplay.style.display = "none";
+        imgDisplay.style.display = "block";
+      }
+      fileReader.readAsDataURL(file[0]);
+    } else {
+      console.error("Le fichier sélectionné n'est pas valide.");
     }
-    fileReader.readAsDataURL(file[0]);
+  } else {
+    console.error("Aucun fichier sélectionné.");
   }
 };
 //Fonction qui active ou non le bouton SUbmit
@@ -323,12 +372,12 @@ function toggleSubmitButton() {
   btnSubmit.classList.toggle("enabled", formValid);
 
   // Ajouter un écouteur d'événements click au bouton btnSubmit
-  btnSubmit.addEventListener("click", () => {
+ /* btnSubmit.addEventListener("click", () => {
     // Vérifier à nouveau si le formulaire est valide avant d'appeler postWorks()
     if (formValid) {
       postWorks(); // Appeler la fonction postWorks() si le formulaire est valide
     }
-  });
+  });*/
 }
 
 
@@ -343,17 +392,14 @@ function displayModal2() {
   closeIcon.classList.add("fa-solid", "fa-xmark", "close");
   const arrowIcon = document.createElement("i");
   arrowIcon.classList.add("fa-solid", "fa-arrow-left", "arrowReturn");
-  const borderLine = document.createElement("hr");
-  const btnValider = document.createElement("div");
-  btnValider.innerHTML = "Valider";
-  btnValider.id = "btnSubmit";
+ 
 
   // Créer le formulaire à l'intérieur d'un conteneur div
   const formContainer = document.createElement("div");
   formContainer.appendChild(createFormModal());
 
   // Ajouter les éléments à la modal
-  aside.append(modalTitle2, formContainer, closeIcon, arrowIcon, borderLine, btnValider);
+  aside.append(modalTitle2, formContainer, closeIcon, arrowIcon);
 
   containerModal.appendChild(aside);
 
@@ -385,18 +431,20 @@ function closeModal() {
 
 
 function arrowLeft() {
+  
   const returnModal1 = document.querySelector(".arrowReturn");
-  const modifyWork = document.querySelector(".modale")
+  const modifyWork = document.querySelector(".modifyWork")
   //Événement au click pour retourner à la page précedente
 
-  document.querySelector(".fa-arrow-left").addEventListener("click", (event) => {
+  /*document.querySelector(".fa-arrow-left").addEventListener("click", (event) => {
     modifyWork.remove();
-  });
+  });*/
 
-  modifyWork.addEventListener("click", (event) => {
-    if (event.target === modifyWork) {
-      modifyWork.remove();
-    }
+  returnModal1.addEventListener("click", (event) => {
+  
+    displayModal();  
+    modifyWork.remove();
+   
   });
 }
 
@@ -462,12 +510,19 @@ function createFormModal() {
     selectInput.appendChild(option);
   });
 
-  form.append(fileLabel, titleLabel, titleInput, selectLabel, selectInput);
+  const borderLine = document.createElement("hr");
+  const btnValider = document.createElement("button");
+  btnValider.innerHTML = "Valider";
+  btnValider.type = "submit";
+  btnValider.id = "btnSubmit";
+
+  form.append(fileLabel, titleLabel, titleInput, selectLabel, selectInput,borderLine,btnValider);
 
   // Ajoutez un gestionnaire d'événements de soumission de formulaire
   form.addEventListener('submit', async (event) => {
     event.preventDefault(); // Empêche le comportement par défaut du formulaire
 
+    
     // Récupérez les valeurs du formulaire
     const image = fileInput.files[0];
     const title = titleInput.value;
@@ -491,18 +546,3 @@ function createFormModal() {
 
   return form;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
