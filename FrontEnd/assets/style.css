@@ -197,6 +197,11 @@ nav ul li a {
 
 }
 
+nav ul li:last-child img {
+	width: 20px;
+	height: auto;
+  }
+
 
 
 li:hover {
@@ -445,7 +450,7 @@ footer nav ul {
 }
 
 #btnSubmit {
-	background-color: #1D6154;
+	background-color: grey;
 	color: #FFF;
 	border-radius: 20px;
 	width: 237px;
@@ -453,12 +458,17 @@ footer nav ul {
 	font-size: 14px;
 	font-family: Syne;
 	border: transparent;
-	cursor: pointer;
+	cursor: not-allowed;
 	padding: 10px 20px;
 	position: relative;
 	left: 50%;
 	bottom: 15px;
 	margin-top: 20px;
+}
+
+#btnSubmit.enabled {
+	background-color: #1D6154;
+	cursor: pointer;
 }
 
 .modifyWork hr {

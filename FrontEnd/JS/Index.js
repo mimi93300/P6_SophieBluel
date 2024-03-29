@@ -87,8 +87,6 @@ async function deleteWork(workId) {
       });
       if (response.ok) {
         console.log(`Le travail avec l'ID ${workId} a été supprimé avec succès.`);
-        // Afficher un message de suppression réussie à l'utilisateur
-        displaySuccessMessage("Le travail a été supprimé avec succès.");
         await displayModalWorks();
         await displayWorks(); // Mettre à jour la galerie principale
       } else {
@@ -106,11 +104,6 @@ async function deleteWork(workId) {
   }
 }
 
-
-function displaySuccessMessage(message) {
-  // Afficher un message de succès à l'utilisateur sous forme d'alerte
-  alert(message);
-}
 
 function displayErrorMessage(message) {
   // Afficher un message d'erreur à l'utilisateur sous forme d'alerte
@@ -221,9 +214,8 @@ function modifyHomePageForAdmin() {
   login.addEventListener("click", (e) => {
     e.preventDefault();
     sessionStorage.removeItem("Token");
-    window.location.href = ("index.html")
+    window.location.href = "index.html";
   });
-  
 
   const body = document.querySelector("body");
   const blackspaceDiv = document.createElement("div");
@@ -234,7 +226,7 @@ function modifyHomePageForAdmin() {
   modEdition.innerHTML = "Mode édition";
   body.prepend(blackspaceDiv);
   blackspaceDiv.append(icon, modEdition);
-  
+
   const modifier = document.createElement("div");
   modifier.classList.add("modifier");
   const icon2 = document.createElement("i");
@@ -242,21 +234,28 @@ function modifyHomePageForAdmin() {
   const btnModifier = document.createElement("p");
   btnModifier.innerHTML = "modifier";
   modifier.append(icon2, btnModifier);
-  
+
   const portfolio = document.querySelector("#portfolio");
   const portfolioH2 = portfolio.querySelector("h2");
   portfolioH2.insertAdjacentElement("afterend", modifier);
-  
-  // Ajout d'un écouteur d'événement pour le clic sur l'icône
-  modifier.addEventListener("click", () => {
+
+   // Ajout d'un écouteur d'événement pour le clic sur l'icône
+   modifier.addEventListener("click", () => {
     // Afficher la modal au milieu
     containerModal = document.createElement("div");
     containerModal.classList.add("containerModal");
     displayModal();
-
   });
-}
 
+  // Vérification de la présence du token
+  const adminToken = sessionStorage.getItem("Token");
+  if (adminToken) {
+    const filtersDiv = document.querySelector(".filters");
+    if (filtersDiv) {
+      filtersDiv.style.display = "none";
+    }
+  }
+}
 
  async function displayModalWorks() {
   const gallery = document.querySelector(".galleryModal");
