@@ -1,8 +1,3 @@
-/*import { displayWorks, displayFilter } from './gallery.js';
-import { fetchWorks, fetchCategories, deleteWork, postWorks } from './apiCalls.js';
-import { modifyHomePageForAdmin } from './adminMode.js';
-import { displayModal, displayModal2, closeModal, arrowLeft, createFormModal, previewImage, toggleSubmitButton } from './modals.js';*/
-
 // Variables globales
 let works = [];
 let categories = [];

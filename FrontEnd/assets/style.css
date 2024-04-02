@@ -84,14 +84,13 @@ time,
 mark,
 audio,
 video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
-
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -104,49 +103,42 @@ hgroup,
 menu,
 nav,
 section {
-	display: block;
+  display: block;
 }
-
 body {
-	line-height: 1;
+  line-height: 1;
 }
-
 ol,
 ul {
-	list-style: none;
+  list-style: none;
 }
-
 blockquote,
 q {
-	quotes: none;
+  quotes: none;
 }
-
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-	content: '';
-	content: none;
+  content: "";
+  content: none;
 }
-
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-
 /** end reset css**/
 body {
-	margin: auto;
-	font-family: 'Work Sans';
-	font-size: 14px;
+  max-width: 1140px;
+  margin: auto;
+  font-family: "Work Sans";
+  font-size: 14px;
+  background: #fffef8;
 }
-
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0;
-	padding-left: 100px;
-    max-width: 1300px;
+	margin: 50px 0
 }
 
 
@@ -212,7 +204,7 @@ li:hover {
 	display: flex;
 	align-items: center;
 	padding: 3% 10% 5% 10%;
-	gap: 15%;
+	gap: 5%;
 }
 
 
@@ -223,11 +215,11 @@ li:hover {
 	width: 474px;
 	height: 355px;
 	top: 17%;
-	left: 10%;
+	right: 5%;
 }
 
 #introduction article {
-	max-width: 36%;
+	max-width: 42%;
 }
 
 #introduction h2 {
@@ -354,8 +346,6 @@ footer nav ul {
 
 #portfolio {
 	position: relative;
-	padding-left: 13%;
-    max-width: 1100px;
 
 }
 
@@ -364,7 +354,7 @@ footer nav ul {
 	display: flex;
 	gap: 7px;
 	position: absolute;
-	right: 360px;
+	right: 380px;
 	top: 10px;
 }
 
@@ -404,7 +394,6 @@ footer nav ul {
 	font-size: 26px;
 	font-weight: 400;
 	padding-top: 50px;
-	font-family: "Work Wans";
 }
 
 .galleryModal {
@@ -489,6 +478,7 @@ footer nav ul {
 	align-items: center;
 	gap: 5px;
 	border-radius: 3px;
+	display: none;
 }
 
 #previewImage {
@@ -499,15 +489,14 @@ footer nav ul {
 	height: 169px;
 	border-radius: 3px;
 	background: #e8f1f6;
+
 }
 
 #imgPreview {
-    max-width: 129px;
-    max-height: 178px;
-    display: block;
-    margin: auto;
-	bottom: 59%;
-    position: relative;
+    width: 33%;
+    height: 100%;
+	object-fit: contain;
+	display: none;
 }
 
 .close {
@@ -601,7 +590,6 @@ footer nav ul {
 	height: 169px;
 	border-radius: 3px;
 	background: #e8f1f6;
-	padding-bottom: 10px;
 }
 
 .modifyWork form p {
@@ -613,23 +601,15 @@ footer nav ul {
 	height: 36px;
 	color: #306685;
 	background: #cbd6dc;
-	bottom: 60px;
-    position: relative;
 }
 
 .modifyWork form i {
 	font-size: 76px;
 	color: #cbd6dc;
-	bottom: 80px;
-    position: relative;
 }
 
 .modifyWork form span {
-	padding-top: 20px;
 	color: #444444;
-	bottom: 73px;
-	position: relative;
-
 }
 
 .modifyWork div {
